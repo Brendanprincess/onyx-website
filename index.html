@@ -4,13 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$ONYX - The Cat That Started It All</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Animated background elements -->
     <div class="background-elements" id="background-elements"></div>
+    
+    <!-- Fixed Chart Section -->
+    <div class="fixed-chart">
+        <div class="chart-header">
+            <h2 class="chart-title">$ONYX LIVE CHART</h2>
+            <div class="social-links-chart">
+                <a href="#" class="social-link-chart">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                </a>
+                <a href="#" class="social-link-chart">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas id="priceChart"></canvas>
+        </div>
+    </div>
     
     <!-- Header -->
     <header>
@@ -21,7 +41,6 @@
         <nav>
             <ul>
                 <li><a href="#about">About</a></li>
-                <li><a href="#chart">Chart</a></li>
                 <li><a href="#tokenomics">Tokenomics</a></li>
                 <li><a href="#community">Community</a></li>
             </ul>
@@ -87,27 +106,6 @@
                     <p>Portion of proceeds goes to animal shelters worldwide</p>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Chart Section -->
-    <section class="chart-section" id="chart">
-        <h2 class="section-title">LIVE PRICE CHART</h2>
-        <div class="chart-container">
-            <div class="chart-header">
-                <div class="price-display">
-                    <span>$ONYX</span>
-                    <div class="current-price">$0.00789</div>
-                    <div class="price-change">+12.5%</div>
-                </div>
-                <div class="chart-actions">
-                    <button class="timeframe-btn active">1H</button>
-                    <button class="timeframe-btn">1D</button>
-                    <button class="timeframe-btn">1W</button>
-                    <button class="timeframe-btn">1M</button>
-                </div>
-            </div>
-            <canvas id="priceChart"></canvas>
         </div>
     </section>
     
