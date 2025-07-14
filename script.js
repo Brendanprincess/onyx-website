@@ -41,6 +41,7 @@ const ctx = document.getElementById('priceChart').getContext('2d');
 // Generate mock price data
 let prices = [];
 let currentPrice = 0.005;
+let chartColor = '#00ff9d'; // Start with green
 
 for (let i = 0; i < 100; i++) {
     // Simulate price movement
@@ -58,9 +59,9 @@ const chart = new Chart(ctx, {
         datasets: [{
             label: '$ONYX Price',
             data: prices,
-            borderColor: '#00ff9d',
+            borderColor: chartColor,
             backgroundColor: 'rgba(0, 255, 157, 0.1)',
-            borderWidth: 2,
+            borderWidth: 3,
             pointRadius: 0,
             tension: 0.4,
             fill: true
@@ -84,7 +85,10 @@ const chart = new Chart(ctx, {
                     color: 'rgba(255, 255, 255, 0.1)'
                 },
                 ticks: {
-                    color: '#cccccc'
+                    color: '#cccccc',
+                    callback: function(value) {
+                        return '$' + value.toFixed(6);
+                    }
                 }
             }
         },
@@ -109,31 +113,23 @@ setInterval(() => {
     prices.push(currentPrice);
     prices.shift();
     
+    // Update chart color based on movement
+    const prevPrice = prices[prices.length - 2];
+    const currentPriceVal = prices[prices.length - 1];
+    
+    if (currentPriceVal >= prevPrice) {
+        chartColor = '#00ff9d'; // Green for upward movement
+        chart.data.datasets[0].backgroundColor = 'rgba(0, 255, 157, 0.1)';
+    } else {
+        chartColor = '#ff3232'; // Red for downward movement
+        chart.data.datasets[0].backgroundColor = 'rgba(255, 50, 50, 0.1)';
+    }
+    
     // Update chart
     chart.data.datasets[0].data = prices;
+    chart.data.datasets[0].borderColor = chartColor;
     chart.update();
-    
-    // Update price display
-    document.querySelector('.current-price').textContent = `$${currentPrice.toFixed(6)}`;
-    
-    // Update price change indicator
-    const changeElement = document.querySelector('.price-change');
-    const changePercent = (change / (currentPrice - change)) * 100;
-    changeElement.textContent = `${changePercent > 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
-    changeElement.style.background = changePercent >= 0 
-        ? 'rgba(0, 255, 157, 0.1)' 
-        : 'rgba(255, 50, 50, 0.1)';
-    changeElement.style.color = changePercent >= 0 ? '#00ff9d' : '#ff3232';
 }, 1000);
-
-// Timeframe buttons functionality
-const timeframeButtons = document.querySelectorAll('.timeframe-btn');
-timeframeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        timeframeButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-    });
-});
 
 // Smooth scrolling for navigation
 document.querySelectorAll('nav a').forEach(anchor => {
